@@ -1,8 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { AiOutlineFile, AiOutlineDelete } from "react-icons/ai";
 import Navbar from "../_components/Navbar";
+import { DocumentIcon } from "@heroicons/react/24/outline";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +31,7 @@ export default function RootLayout({
             </div>
             <button>
               <div className="border rounded-full p-4 hover:bg-muted transition-colors cursor-pointer bg-background shadow">
-                <AiOutlineFile />
+                <DocumentIcon className="w-6 h-6"/>
               </div>
             </button>
           </div>
