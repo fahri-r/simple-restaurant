@@ -1,6 +1,5 @@
 "use client";
 import { AiOutlineFile, AiOutlineDelete } from "react-icons/ai";
-import Navbar from "./components/Navbar";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { IconContext } from "react-icons";
