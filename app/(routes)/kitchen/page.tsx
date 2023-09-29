@@ -22,7 +22,6 @@ export default function Kitchen() {
       const data = JSON.parse(localStorage!.getItem("menus")!);
       setMenus(data);
     }
-    console.log(process.env.TABLE_COUNT??2)
   }, []);
 
   const findMenu = (id: number): Menu => {

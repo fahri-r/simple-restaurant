@@ -7,15 +7,11 @@ import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect, FormEvent } from "react";
 
-const INITIAL_FORM = {
-  id: random(1, 999999),
-  tableId: 1,
-  menuId: 0,
-  quantity: 1,
-};
+const TABLE_COUNT = Number(process.env.TABLE_COUNT);
 
 export default function Order() {
   const [selectedTable, setSelectedTable] = useState<number>(0);
+  const [tables, setTables] = useState<number[]>([]);
   const [selectedMenu, setSelectedMenu] = useState<Menu>();
   const [menus, setMenus] = useState<Menu[]>([]);
   const [order, setOrder] = useState<Order[]>([]);
@@ -31,6 +27,10 @@ export default function Order() {
     if (localStorage.getItem("orders")) {
       const data = JSON.parse(localStorage!.getItem("orders")!);
       setOrder(data);
+    }
+
+    for (let index = 1; index <= TABLE_COUNT; index++) {
+      setTables((oldData: number[]) => [...oldData, index]);
     }
   }, []);
 
@@ -48,9 +48,9 @@ export default function Order() {
       setOrder((oldData: Order[]) => [...oldData, newOrder]);
     }
 
-    (e.target as HTMLFormElement).reset()
-    setSelectedMenu(menus[0])
-    setSelectedTable(0)
+    (e.target as HTMLFormElement).reset();
+    setSelectedMenu(menus[0]);
+    setSelectedTable(0);
   };
 
   useEffect(() => {
@@ -63,43 +63,28 @@ export default function Order() {
     <section className="space-y-3">
       <form onSubmit={handleSubmit}>
         <div className="flex border rounded-md">
-          <div
-            className={`flex-1 p-2 text-center cursor-pointer transition-colors ${
-              selectedTable === 1
-                ? "bg-black text-white"
-                : "bg-white hover:bg-muted text-foreground"
-            } text-sm h-[60px] flex items-center justify-center rounded-l-md`}
-            onClick={() => setSelectedTable(1)}
-          >
-            Meja 1
-          </div>
-          <div
-            className={`flex-1 p-2 text-center cursor-pointer transition-colors ${
-              selectedTable === 2
-                ? "bg-black text-white"
-                : "bg-white hover:bg-muted text-foreground"
-            } text-sm h-[60px] flex items-center justify-center`}
-            onClick={() => setSelectedTable(2)}
-          >
-            Meja 2
-          </div>
-          <div
-            className={`flex-1 p-2 text-center cursor-pointer transition-colors  ${
-              selectedTable === 3
-                ? "bg-black text-white"
-                : "bg-white hover:bg-muted text-foreground"
-            } text-sm h-[60px] flex items-center justify-center rounded-r-md`}
-            onClick={() => setSelectedTable(3)}
-          >
-            Meja 3
-          </div>
+          {tables?.map((x, i) => (
+            <div
+              key={i}
+              className={`flex-1 p-2 text-center cursor-pointer transition-colors ${
+                selectedTable === x
+                  ? "bg-black text-white"
+                  : "bg-white hover:bg-muted text-foreground"
+              } text-sm h-[60px] flex items-center justify-center ${
+                x == 1 ? "rounded-l-md" : ""
+              } ${x == tables.length ? "rounded-r-md" : ""}`}
+              onClick={() => setSelectedTable(x)}
+            >
+              Meja {x}
+            </div>
+          ))}
         </div>
-            {selectedMenu && (
-        <div className="flex space-x-2">
-          <div className="space-y-1 w-full">
-            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Menu
-            </label>
+        {selectedMenu && (
+          <div className="flex space-x-2">
+            <div className="space-y-1 w-full">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Menu
+              </label>
               <Listbox
                 as="div"
                 className="relative"
@@ -136,20 +121,20 @@ export default function Order() {
                   ))}
                 </Listbox.Options>
               </Listbox>
+            </div>
+            <div className="space-y-1">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Jumlah
+              </label>
+              <input
+                onChange={(e) => setQuantity(Number(e.target.value))}
+                type="number"
+                placeholder="Kuantitas"
+                className="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[140px] text-muted-foreground"
+              />
+            </div>
           </div>
-          <div className="space-y-1">
-            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Jumlah
-            </label>
-            <input
-              onChange={(e) => setQuantity(Number(e.target.value))}
-              type="number"
-              placeholder="Kuantitas"
-              className="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[140px] text-muted-foreground"
-            />
-          </div>
-        </div>
-            )}
+        )}
         <div className="text-right mt-4">
           <button
             type="submit"
