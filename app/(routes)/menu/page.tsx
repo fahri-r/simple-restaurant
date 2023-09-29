@@ -1,11 +1,5 @@
 "use client";
-import {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import Menu from "@/app/_types/Menu";
 import random from "@/app/_lib/random";
@@ -36,6 +30,7 @@ export default function Menu() {
       setMenu((oldData: Menu[]) => [...oldData, newMenu]);
     }
     setForm(INITIAL_FORM);
+    (e.target as HTMLFormElement).reset()
   };
 
   useEffect(() => {
@@ -54,13 +49,10 @@ export default function Menu() {
   };
 
   useEffect(() => {
-    localStorage.setItem("menus", JSON.stringify(menu));
+    if (menu.length > 0) {
+      localStorage.setItem("menus", JSON.stringify(menu));
+    }
   }, [menu]);
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
-
-  const inputRef = useRef(null);
 
   return (
     <section className="space-y-4">
@@ -77,6 +69,7 @@ export default function Menu() {
                 name="menu"
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 onChange={(e) => handleChange(e)}
+                placeholder="Tambahkan disini..."
                 required
               />
             </div>
@@ -90,6 +83,7 @@ export default function Menu() {
                 name="price"
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 onChange={(e) => handleChange(e)}
+                placeholder="Tambahkan disini..."
                 required
               />
             </div>
