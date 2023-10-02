@@ -58,7 +58,7 @@ export default function Menu() {
     <section className="space-y-4">
       <div className="space-y-2">
         <div className="space-y-1">
-          <form className="flex space-x-2 items-end" onSubmit={handleSubmit}>
+          <form className="flex flex-col md:flex-row space-x-2 space-y-2 md:space-y-0 items-end" onSubmit={handleSubmit}>
             <div className="w-full">
               <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Menu Makanan

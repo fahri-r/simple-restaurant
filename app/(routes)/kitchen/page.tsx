@@ -31,7 +31,7 @@ export default function Kitchen() {
 
   return (
     <section>
-      <div className="flex">
+      <div className="flex flex-col md:flex-row gap-10 md:gap-0">
         {orders &&
           orders.map((x, i) => (
             <div className="w-1/3 space-y-4" key={i}>

@@ -61,11 +61,11 @@ export default function Cashier() {
         <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
           Meja
         </label>
-        <div className="flex items-center justify-between">
-          <div className="flex space-x-2">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-0 items-center justify-between">
+          <div className="flex space-x-2 w-full md:w-[180px]">
             <Listbox
               as="div"
-              className="relative"
+              className="relative w-full"
               value={selectedTable}
               onChange={setSelectedTable}
               disabled={
@@ -76,7 +76,7 @@ export default function Cashier() {
                   : false
               }
             >
-              <Listbox.Button className="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[180px]">
+              <Listbox.Button className="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full">
                 <span className="block truncate">
                   {selectedTable ?? "Print Struk"}
                 </span>
@@ -111,7 +111,7 @@ export default function Cashier() {
           </div>
           <button
             onClick={handleEmptyTable}
-            className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
+            className="w-full md:w-fit inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
             disabled={selectedTable ? false : true}
           >
             Kosongkan Meja
